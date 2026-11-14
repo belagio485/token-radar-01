@@ -78,11 +78,15 @@ if (shots.length < 3) {
   process.stderr.write(`token radar: screenshots/ holds ${shots.length} image${shots.length === 1 ? '' : 's'}: hand in 3, the board, a detail view and a filtered view\n`);
   process.exit(1);
 }
-for (const name of shots) {
-  if (!IMAGE_NAME.test(name)) {
-    process.stderr.write(`token radar: screenshots/${name}: a name is letters, digits and . _ -, 1 to 128 characters\n`);
-    process.exit(1);
-  }
+/** The first screenshot name the dossier refuses, or null when every name is legal. */
+function badShotName(shots: string[]): string | null {
+  return shots.find((name) => !IMAGE_NAME.test(name)) ?? null;
+}
+
+const badShot = badShotName(shots);
+if (badShot !== null) {
+  process.stderr.write(`token radar: screenshots/${badShot}: a name is letters, digits and . _ -, 1 to 128 characters\n`);
+  process.exit(1);
 }
 
 // The dossier is written last: the scorer rebuilds it from this /output and compares bytes.

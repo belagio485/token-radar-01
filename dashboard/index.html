@@ -3,12 +3,47 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Token Radar — pre-token protocols ranked by implied value</title>
+<title>Token Radar — Pre-Token Protocol Launches, Ranked</title>
 <link rel="stylesheet" href="app.css">
 </head>
 <body>
-<a class="skip" href="#board">Skip to the board</a>
-<main id="board" tabindex="-1" aria-busy="true"></main>
+<header class="top">
+  <div class="top-inner">
+    <div>
+      <h1>Token Radar</h1>
+      <p class="tagline">Every protocol that records no token, ranked by what its launch would be worth — with the steps to farm each one.</p>
+    </div>
+    <div class="top-badges">
+      <span class="badge" id="asof-badge">Snapshot date loading…</span>
+      <span class="badge badge-dim">No token is guaranteed; values are this radar's own claim.</span>
+    </div>
+  </div>
+</header>
+<main>
+  <section id="stats" class="stats" aria-label="Board summary"></section>
+
+  <details class="method" id="method">
+    <summary>How the radar values a launch — the model, in plain words</summary>
+    <div class="method-body">
+      <p>Each protocol's implied value is its TVL times a multiple, adjusted for momentum, age, and chain breadth:</p>
+      <p class="formula">implied value = TVL × category multiple × growth factor × age factor × breadth factor</p>
+      <ul>
+        <li><strong>Category multiple.</strong> The median market-cap-to-TVL ratio of the protocols in the same category whose token already trades, taken from this same snapshot. Categories with too few traded comparables use the global median. No name list, no hand-picked multiple.</li>
+        <li><strong>Growth factor.</strong> The protocol's 7-day TVL change, capped, so one wild week cannot dominate: shrinking protocols are discounted, growing ones rewarded.</li>
+        <li><strong>Age factor.</strong> Days since DefiLlama began tracking the protocol with no token recorded, saturating after about two and a half years: value accrues with a track record.</li>
+        <li><strong>Breadth factor.</strong> A small premium per extra chain, capped: more chains reach more users.</li>
+      </ul>
+      <p>The board holds every protocol that records no token — no CoinGecko id, no ticker, no market cap in the record. The 40-protocol watchlist is the floor, never the ceiling: most rows sit below it, and those are the early finds. Protocols whose token already trades appear only as calibration comparables below, never on the board.</p>
+      <div id="calibration"></div>
+    </div>
+  </details>
+
+  <section id="controls" class="controls" aria-label="Board controls"></section>
+  <div id="view"></div>
+</main>
+<footer>
+  <p>Token Radar reads a sealed DefiLlama snapshot and derives everything from its figures. “Records no token” means the snapshot's record carries no token — it is not proof that none exists. Implied values are this entry's own claim, never a prediction that a token will launch, and farm plans are starting points: verify every contract address before you approve anything.</p>
+</footer>
 <script src="../data.js"></script>
 <script src="app.js"></script>
 </body>
